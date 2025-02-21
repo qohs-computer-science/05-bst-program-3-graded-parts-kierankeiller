@@ -1,3 +1,5 @@
+import java.lang.Comparable;
+
 public class TreeNode
 {
 	private TreeNode left;
