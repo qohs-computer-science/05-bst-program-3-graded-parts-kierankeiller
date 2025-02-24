@@ -1,5 +1,4 @@
 import java.lang.Comparable;
-
 public class BST implements BSTInterface
 {
     private TreeNode root;
@@ -21,23 +20,22 @@ public class BST implements BSTInterface
     {
         if(root==null)
 		    root= new TreeNode(val, null, null);
-	    else if (val.compareTo(root.getValue())<0)
+	    else if (val.compareTo(root.getValue())<=0)
 		    addHelper(val, root.getLeft(), root);
 	    else 
 		    addHelper(val, root.getRight(), root);
-
     }
 
     public void addHelper(Comparable val, TreeNode child, TreeNode parent){
         if (child == null){
-		    if (parent.getValue().compareTo(val)>=0){
+		    if (val.compareTo(parent.getValue())<=0){
 			    parent.setLeft(new TreeNode(val));
             }
-            if (parent.getValue().compareTo(val)<0){
+            if (val.compareTo(parent.getValue())>0){
 			    parent.setRight(new TreeNode(val));
             }
         }
-	    else if (val.compareTo(child.getValue())<0){
+	    else if (val.compareTo(child.getValue())<=0){
 		    addHelper(val, child.getLeft(), child);
         }
 	    else {
@@ -54,19 +52,47 @@ public class BST implements BSTInterface
             if (root.getValue()==val){
                 return true;
             }
-            else if (root.getValue().compareTo(val)>0){
+            else if (val.compareTo(root.getValue())<=0){
                 if (root.getLeft() != null){
-                    findHelper(root, root.getLeft());
+                    return findHelper(root.getLeft(), val);
+                }
+                else {
+                    return false;
+                }
+            }
+            else if (val.compareTo(root.getValue())>0){
+                if (root.getRight() != null){
+                    return findHelper(root.getRight(), val);
                 }
                 else {
                     return false;
                 }
             }
         }
+        return false;
     }
 
-    public TreeNode findHelper  (TreeNode parent, TreeNode child){
-        return root;
+    public boolean findHelper  (TreeNode child, Comparable val){
+        if (child.getValue()==val){
+            return true;
+        }
+        else if (val.compareTo(child.getValue())<=0){
+            if (child.getLeft() != null){
+                return findHelper(child.getLeft(), val);
+            }
+            else {
+                return false;
+            }
+        }
+        else if (val.compareTo(child.getValue())>0){
+            if (child.getRight() != null){
+                return findHelper(child.getRight(), val);
+            }
+            else {
+                return false;
+            }
+        }
+        return false;
     }
 
     public boolean replace(Comparable old, Comparable toAdd) //this method takes an “old” object – determines if it is currently in the tree and if it is, removes that object and adds the “toAdd” object.  If the element was successfully replaced then true is returned, if the old object did not exist then false is returned and the toAdd object is added to the BST.  Remember that you cannot just replace an element by changing its value because it may not belong at that spot in the tree after being replaced. 
@@ -79,19 +105,73 @@ public class BST implements BSTInterface
     }
     public void printInOrder() //prints the tree using an In Order traversal - recursion
     {
-        
-        
+        System.out.print("In Order Print: ");
+        if (root == null)
+            System.out.println("There is nothing to print");
+        if (root.getLeft()!=null)
+            inOrderHelper(root.getLeft());
+        System.out.print(root.getValue() + " ");
+        if (root.getRight()!=null)
+            inOrderHelper(root.getRight());
+        System.out.println();
     }
 
-    public void inOrderHelper(TreeNode child, TreeNode parent){
+    public void inOrderHelper(TreeNode child){
+        if (child.getLeft()!=null){
+            inOrderHelper(child.getLeft());
+        }
+        System.out.print(child.getValue() + " ");
+        if (child.getRight()!=null){
+            inOrderHelper(child.getRight());
+        }
+        return;
     }
 
     public void printPreOrder() //prints the tree using a Pre Order traversal - recursion
     {
-
+        System.out.print("Pre Order Print: ");
+        if (root == null)
+            System.out.println("There is nothing to print");
+        System.out.print(root.getValue() + " ");
+        if (root.getLeft()!=null)
+            preOrderHelper(root.getLeft());
+        if (root.getRight()!=null)
+            preOrderHelper(root.getRight());
+        System.out.println();
     }
-    public void printPostOrder() //prints the tree using a Post Order traversal – recursion
-    {
 
+    public void preOrderHelper(TreeNode child){
+        System.out.print(child.getValue() + " ");
+        if (child.getLeft()!=null){
+            preOrderHelper(child.getLeft());
+        }
+        if (child.getRight()!=null){
+            preOrderHelper(child.getRight());
+        }
+        return;
+    }
+
+    public void printPostOrder() //prints the tree using a Post Order traversal - recursion
+    {
+        System.out.print("Post Order Print: ");
+        if (root == null)
+            System.out.println("There is nothing to print");
+        if (root.getLeft()!=null)
+            postOrderHelper(root.getLeft());
+        if (root.getRight()!=null)
+            postOrderHelper(root.getRight());
+        System.out.print(root.getValue() + " ");
+        System.out.println();
+    }
+
+    public void postOrderHelper(TreeNode child){
+        if (child.getLeft()!=null){
+            postOrderHelper(child.getLeft());
+        }
+        if (child.getRight()!=null){
+            postOrderHelper(child.getRight());
+        }
+        System.out.print(child.getValue() + " ");
+        return;
     }
 }

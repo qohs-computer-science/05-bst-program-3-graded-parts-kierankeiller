@@ -4,7 +4,6 @@
  * Pd.8
  * TODO: Program Description
  */
-
  import java.lang.Comparable;
 
  public class BSTTester {
@@ -23,5 +22,15 @@
     jim.add("N");
     jim.add("C");
     jim.add("E");
+    jim.printInOrder();
+    jim.printPreOrder();
+    jim.printPostOrder();
+    System.out.println(jim.find("A"));
+    System.out.println(jim.find("Q"));
+    System.out.println(jim.find("O"));
+    System.out.println(jim.find("D"));
+    System.out.println(jim.find("F"));
+    System.out.println(jim.find("2"));
+    System.out.println(jim.find("H"));
    }
  }

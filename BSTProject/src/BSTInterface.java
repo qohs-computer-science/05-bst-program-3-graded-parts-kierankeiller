@@ -1,5 +1,4 @@
 import java.lang.Comparable;
-
 public interface BSTInterface
 {
 	public int size();
