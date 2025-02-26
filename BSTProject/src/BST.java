@@ -45,6 +45,7 @@ public class BST implements BSTInterface
 
     public boolean find(Comparable val) //searches through the tree to determine if the object being passed is a current element in the tree if it is, return true, otherwise, return false
     {
+        System.out.print("Looking for " + val + ": ");
         if (root.getValue()==null){
             return false;
         }
@@ -99,10 +100,93 @@ public class BST implements BSTInterface
     {
         return false;
     } 
-    public boolean delete(Comparable old) //this method deletes the object being passed to the method from the tree.  When you remove the node you must then change any children around to accommodate for the deleted node.  Return true if the node was successfully deleted, false if it was not in the tree and therefore not deleted.
+
+
+    public boolean delete(Comparable val) //this method deletes the object being passed to the method from the tree.  When you remove the node you must then change any children around to accommodate for the deleted node.  Return true if the node was successfully deleted, false if it was not in the tree and therefore not deleted.
     {
+        if(root==null)
+		    return false;
+        else if (root.getValue()==val){
+            if (root.getLeft() != null && root.getRight() != null){ // has a right and left child
+                TreeNode temp = root.getLeft();
+                while(temp.getRight() != null){
+                    temp = temp.getRight();
+                }
+                temp.setRight(root.getRight());
+                root.setRight(null);
+                root = root.getLeft();
+            }
+            else if (root.getRight() != null){ //has a right child
+                root = root.getRight();
+            }
+            else if (root.getLeft() != null){// has a left child
+                root = root.getLeft();
+            }
+            else { // has no child
+                root.setValue(null);
+                return true;
+            }
+        }
+	    else if (val.compareTo(root.getValue())<=0)
+		    deleteHelper(val, root.getLeft(), root);
+	    else 
+		    deleteHelper(val, root.getRight(), root);
         return false;
     }
+
+    public boolean deleteHelper(Comparable val, TreeNode parent, TreeNode gpa) 
+    {
+        if(parent==null)
+		    return false;
+        else if (parent.getValue()==val){
+            if (parent.getLeft() != null && parent.getRight() != null){ // has a right and left child
+                TreeNode temp = parent.getLeft();
+                while(temp.getRight() != null){
+                    temp = temp.getRight();
+                }
+                temp.setRight(parent.getRight());
+                parent.setRight(null);
+                if (parent.getValue().compareTo(gpa.getValue())>0){
+                    gpa.setRight(temp);
+                }
+                else{
+                    gpa.setLeft(temp);
+                }
+                parent = parent.getLeft();
+                return true;
+            }
+            else if (parent.getRight() != null){ //has a right child
+                if (parent.getValue().compareTo(gpa.getValue())>0){
+                    gpa.setRight(parent.getRight());
+                }
+                else{
+                    gpa.setLeft(parent.getRight());
+                }
+                parent = parent.getRight();
+                return true;
+            }
+            else if (parent.getLeft() != null){// has a left child
+                if (parent.getValue().compareTo(gpa.getValue())>0){
+                    gpa.setRight(parent.getLeft());
+                }
+                else{
+                    gpa.setLeft(parent.getLeft());
+                }
+                parent = parent.getLeft();
+                return true;
+            }
+            else { // has no child
+                parent.setValue(null);
+                return true;
+            }
+        }
+        else if (val.compareTo(parent.getValue())<=0)
+		    deleteHelper(val, parent.getLeft(), parent);
+	    else 
+		    deleteHelper(val, parent.getRight(), parent);
+        return false;
+    }
+
     public void printInOrder() //prints the tree using an In Order traversal - recursion
     {
         System.out.print("In Order Print: ");
