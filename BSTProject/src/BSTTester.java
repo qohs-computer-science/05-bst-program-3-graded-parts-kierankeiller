@@ -22,7 +22,9 @@
     jim.add("N");
     jim.add("C");
     jim.add("E");
-    jim.delete("H");
+    jim.delete("O");
+    jim.printInOrder();
+    jim.delete("N");
     jim.printInOrder();
     jim.printPreOrder();
     jim.printPostOrder();

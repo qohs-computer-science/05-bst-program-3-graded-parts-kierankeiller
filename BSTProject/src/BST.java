@@ -147,10 +147,10 @@ public class BST implements BSTInterface
                 temp.setRight(parent.getRight());
                 parent.setRight(null);
                 if (parent.getValue().compareTo(gpa.getValue())>0){
-                    gpa.setRight(temp);
+                    gpa.setRight(parent.getLeft());
                 }
                 else{
-                    gpa.setLeft(temp);
+                    gpa.setLeft(parent.getLeft());
                 }
                 parent = parent.getLeft();
                 return true;
