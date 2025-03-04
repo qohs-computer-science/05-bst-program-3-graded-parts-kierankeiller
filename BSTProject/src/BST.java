@@ -75,59 +75,59 @@ public class BST implements BSTInterface
 	    else {
 		    addHelper(val, child.getRight(), child);
         }//end else
-    }
+    }//end addHelper
 
     public boolean find(Comparable val) //searches through the tree to determine if the object being passed is a current element in the tree if it is, return true, otherwise, return false
     {
         if (root.getValue()==null){
             return false;
-        }
+        }//end if
         else{
             if (root.getValue()==val){
                 return true;
-            }
+            }//end if
             else if (val.compareTo(root.getValue())<=0){
                 if (root.getLeft() != null){
                     return findHelper(root.getLeft(), val);
-                }
+                }//end if
                 else {
                     return false;
-                }
-            }
+                }//end else
+            }//end else if
             else if (val.compareTo(root.getValue())>0){
                 if (root.getRight() != null){
                     return findHelper(root.getRight(), val);
-                }
+                }//end if
                 else {
                     return false;
-                }
-            }
-        }
+                }//end else
+            }//end else if
+        }//end else
         return false;
-    }
+    }//end find
 
     public boolean findHelper  (TreeNode child, Comparable val){
         if (child.getValue()==val){
             return true;
-        }
+        }//end if
         else if (val.compareTo(child.getValue())<=0){
             if (child.getLeft() != null){
                 return findHelper(child.getLeft(), val);
-            }
+            }//end if
             else {
                 return false;
-            }
-        }
+            }//end else
+        }//end else if
         else if (val.compareTo(child.getValue())>0){
             if (child.getRight() != null){
                 return findHelper(child.getRight(), val);
-            }
+            }//end if
             else {
                 return false;
-            }
-        }
+            }//end else
+        }//end else if
         return false;
-    }
+    }//end find helper
 
     public boolean replace(Comparable val, Comparable toAdd) //this method takes an “old” object – determines if it is currently in the tree and if it is, removes that object and adds the “toAdd” object.  If the element was successfully replaced then true is returned, if the old object did not exist then false is returned and the toAdd object is added to the BST.  Remember that you cannot just replace an element by changing its value because it may not belong at that spot in the tree after being replaced. 
     {
@@ -135,10 +135,10 @@ public class BST implements BSTInterface
             this.delete(val);
             this.add(toAdd);
             return true;
-        }
+        }//end if
         this.add(toAdd);
         return false;
-    } 
+    } //end replace
 
 
     public boolean delete(Comparable val) //this method deletes the object being passed to the method from the tree.  When you remove the node you must then change any children around to accommodate for the deleted node.  Return true if the node was successfully deleted, false if it was not in the tree and therefore not deleted.
@@ -150,28 +150,28 @@ public class BST implements BSTInterface
                 TreeNode temp = root.getLeft();
                 while(temp.getRight() != null){
                     temp = temp.getRight();
-                }
+                }//end while
                 temp.setRight(root.getRight());
                 root.setRight(null);
                 root = root.getLeft();
-            }
+            }//end if
             else if (root.getRight() != null){ //has a right child
                 root = root.getRight();
-            }
+            }//end else if
             else if (root.getLeft() != null){// has a left child
                 root = root.getLeft();
-            }
+            }//end else if
             else { // has no child
                 root.setValue(null);
                 return true;
-            }
-        }
+            }//end else
+        }//end else if
 	    else if (val.compareTo(root.getValue())<=0)
 		    deleteHelper(val, root.getLeft(), root);
 	    else 
 		    deleteHelper(val, root.getRight(), root);
         return false;
-    }
+    }// end delete
 
     public boolean deleteHelper(Comparable val, TreeNode parent, TreeNode gpa) 
     {
@@ -182,49 +182,49 @@ public class BST implements BSTInterface
                 TreeNode temp = parent.getLeft();
                 while(temp.getRight() != null){
                     temp = temp.getRight();
-                }
+                }//end while
                 temp.setRight(parent.getRight());
                 parent.setRight(null);
                 if (parent.getValue().compareTo(gpa.getValue())>0){
                     gpa.setRight(parent.getLeft());
-                }
+                }//end if
                 else{
                     gpa.setLeft(parent.getLeft());
-                }
+                }//end else
                 parent = parent.getLeft();
                 return true;
-            }
+            }//end if
             else if (parent.getRight() != null){ //has a right child
                 if (parent.getValue().compareTo(gpa.getValue())>0){
                     gpa.setRight(parent.getRight());
-                }
+                }//end if
                 else{
                     gpa.setLeft(parent.getRight());
-                }
+                }//end else
                 parent = parent.getRight();
                 return true;
-            }
+            }//end else if
             else if (parent.getLeft() != null){// has a left child
                 if (parent.getValue().compareTo(gpa.getValue())>0){
                     gpa.setRight(parent.getLeft());
-                }
+                }//end if
                 else{
                     gpa.setLeft(parent.getLeft());
-                }
+                }//end else
                 parent = parent.getLeft();
                 return true;
-            }
+            }//end else if
             else { // has no child
                 parent.setValue(null);
                 return true;
-            }
-        }
+            }//end else
+        }//end else if
         else if (val.compareTo(parent.getValue())<=0)
 		    deleteHelper(val, parent.getLeft(), parent);
 	    else 
 		    deleteHelper(val, parent.getRight(), parent);
         return false;
-    }
+    }//end delete helper
 
     public void printInOrder() //prints the tree using an In Order traversal - recursion
     {
@@ -237,18 +237,18 @@ public class BST implements BSTInterface
         if (root.getRight()!=null)
             inOrderHelper(root.getRight());
         System.out.println();
-    }
+    }//end printInOrder
 
     public void inOrderHelper(TreeNode child){
         if (child.getLeft()!=null){
             inOrderHelper(child.getLeft());
-        }
+        }//end if
         System.out.print(child.getValue() + " ");
         if (child.getRight()!=null){
             inOrderHelper(child.getRight());
-        }
+        }//end if
         return;
-    }
+    }//end inOrderHelper
 
     public void printPreOrder() //prints the tree using a Pre Order traversal - recursion
     {
@@ -261,18 +261,18 @@ public class BST implements BSTInterface
         if (root.getRight()!=null)
             preOrderHelper(root.getRight());
         System.out.println();
-    }
+    }//end printPreOrder
 
     public void preOrderHelper(TreeNode child){
         System.out.print(child.getValue() + " ");
         if (child.getLeft()!=null){
             preOrderHelper(child.getLeft());
-        }
+        }//end if
         if (child.getRight()!=null){
             preOrderHelper(child.getRight());
-        }
+        }//end if
         return;
-    }
+    }//end preOrderHelper
 
     public void printPostOrder() //prints the tree using a Post Order traversal - recursion
     {
@@ -285,16 +285,16 @@ public class BST implements BSTInterface
             postOrderHelper(root.getRight());
         System.out.print(root.getValue() + " ");
         System.out.println();
-    }
+    }//end printPostOrder
 
     public void postOrderHelper(TreeNode child){
         if (child.getLeft()!=null){
             postOrderHelper(child.getLeft());
-        }
+        }//end if
         if (child.getRight()!=null){
             postOrderHelper(child.getRight());
-        }
+        }//end if
         System.out.print(child.getValue() + " ");
         return;
-    }
-}
+    }//end postOrderHelper
+}//end BST class

@@ -64,5 +64,5 @@
 
     System.out.print("Finding C: ");
     System.out.println(jim.find("C"));
-   }
- }
+   }//end main
+ }//end class
