@@ -1,3 +1,10 @@
+/*
+ * Kieran Keiller
+ * 2/20/25
+ * Pd.8
+ * This creates a BST class that can add, remove, find, replace, and check for size, emptiness, and print the values in a Binary Search Tree.
+ */
+
 import java.lang.Comparable;
 public class BST implements BSTInterface
 {
@@ -6,16 +13,43 @@ public class BST implements BSTInterface
     public BST() //- This constructor creates an empty tree (remember to set any values to null) (4 points with proper field creation)
     {
         root=null;
-    }
+    }//end BST constructor
 
+    int size = 0;
     public int size()// returns the current number of nodes that are located in the tree
-    {
-        return 0;
-    }
+    {   
+        size = 0;
+        System.out.print("Size: ");
+        if (root==null){
+            return size;
+        }//end if
+        if (root.getLeft()!=null)
+            sizeHelper(root.getLeft());
+        size++;
+        if (root.getRight()!=null)
+            sizeHelper(root.getRight());
+        return size;
+    }//end size
+
+    public void sizeHelper(TreeNode child){
+        if (child.getLeft()!=null){
+            sizeHelper(child.getLeft());
+        }//end if
+        size++;
+        if (child.getRight()!=null){
+            sizeHelper(child.getRight());
+        }//end if
+        return;
+    }//end size helper
+
+
     public boolean isEmpty() //returns true if there are no nodes in the tree and false if there is at least one node in the tree
     {
+        if (root == null){
+            return true;
+        }//end if
         return false;
-    }
+    }//end isEmpty
     public void add(Comparable val)// - Creates a new node to store the value being sent then adds the node to the tree in the correct place (remember all left children are less than or equal to their parent and all right children are greater than their parent).   (10 points with proper helper method creation, use of recursion)
     {
         if(root==null)
@@ -24,28 +58,27 @@ public class BST implements BSTInterface
 		    addHelper(val, root.getLeft(), root);
 	    else 
 		    addHelper(val, root.getRight(), root);
-    }
+    }//end add
 
     public void addHelper(Comparable val, TreeNode child, TreeNode parent){
         if (child == null){
 		    if (val.compareTo(parent.getValue())<=0){
 			    parent.setLeft(new TreeNode(val));
-            }
+            }//end if
             if (val.compareTo(parent.getValue())>0){
 			    parent.setRight(new TreeNode(val));
-            }
-        }
+            }//end if
+        }//end if
 	    else if (val.compareTo(child.getValue())<=0){
 		    addHelper(val, child.getLeft(), child);
-        }
+        }//end else if
 	    else {
 		    addHelper(val, child.getRight(), child);
-        }
+        }//end else
     }
 
     public boolean find(Comparable val) //searches through the tree to determine if the object being passed is a current element in the tree if it is, return true, otherwise, return false
     {
-        System.out.print("Looking for " + val + ": ");
         if (root.getValue()==null){
             return false;
         }
@@ -96,8 +129,14 @@ public class BST implements BSTInterface
         return false;
     }
 
-    public boolean replace(Comparable old, Comparable toAdd) //this method takes an “old” object – determines if it is currently in the tree and if it is, removes that object and adds the “toAdd” object.  If the element was successfully replaced then true is returned, if the old object did not exist then false is returned and the toAdd object is added to the BST.  Remember that you cannot just replace an element by changing its value because it may not belong at that spot in the tree after being replaced. 
+    public boolean replace(Comparable val, Comparable toAdd) //this method takes an “old” object – determines if it is currently in the tree and if it is, removes that object and adds the “toAdd” object.  If the element was successfully replaced then true is returned, if the old object did not exist then false is returned and the toAdd object is added to the BST.  Remember that you cannot just replace an element by changing its value because it may not belong at that spot in the tree after being replaced. 
     {
+        if (this.find(val)==true){
+            this.delete(val);
+            this.add(toAdd);
+            return true;
+        }
+        this.add(toAdd);
         return false;
     } 
 
