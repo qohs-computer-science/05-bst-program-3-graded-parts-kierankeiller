@@ -50,6 +50,7 @@ public class BST implements BSTInterface
         }//end if
         return false;
     }//end isEmpty
+
     public void add(Comparable val)// - Creates a new node to store the value being sent then adds the node to the tree in the correct place (remember all left children are less than or equal to their parent and all right children are greater than their parent).   (10 points with proper helper method creation, use of recursion)
     {
         if(root==null)
@@ -162,7 +163,7 @@ public class BST implements BSTInterface
                 root = root.getLeft();
             }//end else if
             else { // has no child
-                root.setValue(null);
+                root = null;
                 return true;
             }//end else
         }//end else if
@@ -191,27 +192,35 @@ public class BST implements BSTInterface
                 else{
                     gpa.setLeft(parent.getLeft());
                 }//end else
-                parent = parent.getLeft();
+                parent.setRight(null);
+                parent.setLeft(null);
+                parent = temp;
                 return true;
             }//end if
             else if (parent.getRight() != null){ //has a right child
+                TreeNode temp = parent.getRight();
                 if (parent.getValue().compareTo(gpa.getValue())>0){
                     gpa.setRight(parent.getRight());
                 }//end if
                 else{
                     gpa.setLeft(parent.getRight());
                 }//end else
-                parent = parent.getRight();
+                parent.setRight(null);
+                parent.setLeft(null);
+                parent = temp;
                 return true;
             }//end else if
             else if (parent.getLeft() != null){// has a left child
+                TreeNode temp = parent.getLeft();
                 if (parent.getValue().compareTo(gpa.getValue())>0){
                     gpa.setRight(parent.getLeft());
                 }//end if
                 else{
                     gpa.setLeft(parent.getLeft());
                 }//end else
-                parent = parent.getLeft();
+                parent.setRight(null);
+                parent.setLeft(null);
+                parent = temp;
                 return true;
             }//end else if
             else { // has no child
