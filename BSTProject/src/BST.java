@@ -139,7 +139,7 @@ public class BST implements BSTInterface
         }//end if
         this.add(toAdd);
         return false;
-    } //end replace
+    } //end replace 
 
 
     public boolean delete(Comparable val) //this method deletes the object being passed to the method from the tree.  When you remove the node you must then change any children around to accommodate for the deleted node.  Return true if the node was successfully deleted, false if it was not in the tree and therefore not deleted.
